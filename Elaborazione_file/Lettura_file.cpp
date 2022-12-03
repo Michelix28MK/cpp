@@ -20,6 +20,8 @@ int main(){
         fgets(cTesto, 1000, testo);
         cout<<cTesto<<endl;
     }
+
+    fclose(testo);
     
     return 0;
 }

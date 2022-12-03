@@ -7,7 +7,11 @@ int s=0, normae, vet[10], n=10;
 
 int main ()
 {
-    carica_vettore();
+    for (int i = 0; i < n; i++)
+    {
+        cout << endl << "inserisci il "<<i+1<<" numero: ";
+        cin>>vet[n];
+    }
 
     for (int i=0; i<n; i++){
 
@@ -21,15 +25,6 @@ int main ()
     system("pause");
 
     return 0;
-}
-
-void carica_vettore(){
-
-    for (int i = 0; i < n; i++)
-    {
-        cout << endl << "inserisci il "<<i+1<<" numero: ";
-        cin>>vet[n];
-    }
 }
 /**
  * Le variabili devi tenerle al difuori del main() perchè possano essere visualizzate dalla Void()
