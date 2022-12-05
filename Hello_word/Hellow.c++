@@ -4,12 +4,13 @@
 #include <math.h> //potenze e calcoli
 #include <stdlib.h> //rfunzione rand()
 #include <stdio.h> // gestione file
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int main(int argc, char const *argv[])
-{   int a = 0;
+int main()
+{   
     cout << "hellow word!";
-    cin >> a;
     return 0;
 }

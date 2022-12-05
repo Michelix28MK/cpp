@@ -1,6 +1,6 @@
 #include <iostream>
 
-using namespace std;
+using std::cout, std::cin;
 
 int main (){
     char select;
