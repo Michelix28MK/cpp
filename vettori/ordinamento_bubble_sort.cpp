@@ -16,7 +16,7 @@ int main(){
     {
         cout << j << " ";
     }
-    do{   
+    do{   //start bubble
         scambio = false;
 
         for (int i = n-1; i > limite ; i--)
@@ -33,7 +33,7 @@ int main(){
         } 
         limite = Us; 
 
-    } while (scambio != false);
+    } while (scambio != false); //stop bubble
 
     cout<<"\n Vettore finale: ";
     for (auto &&i : Vet)
