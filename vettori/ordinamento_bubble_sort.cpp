@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+
 
 using namespace std;
 
@@ -8,22 +8,22 @@ using namespace std;
 int main(){
     
     vector<int> Vet{ 3, 15 , 78 , 14 ,11};
-    int margine = 0, Us, temp;
+    int limite = 0, Us, temp, n = Vet.size();
     bool scambio = false; 
 
     cout<<"Vettore iniziale: ";
-    for (auto &&i : Vet)
+    for (auto &&j : Vet)
     {
-        cout << i << " ";
+        cout << j << " ";
     }
-    
-    do
-    {   
+    do{   
         scambio = false;
-        for (auto i = Vet.size()-1; i < margine ; i--)
-        {
-            if (Vet[i]< Vet[i-1])
-            {
+
+        for (int i = n-1; i > limite ; i--)
+        {   
+            if (Vet[i] < Vet[i-1])
+            {   
+                cout<< "\n Scambio "<< Vet[i]<<" e "<<Vet[i-1]<<endl;
                 temp = Vet[i];
                 Vet[i] = Vet[i-1];
                 Vet[i-1] = temp;
@@ -31,10 +31,11 @@ int main(){
                 scambio = true;
             }
         } 
-        margine = Us;     
+        limite = Us; 
+
     } while (scambio != false);
 
-    cout<<"Vettore finale: ";
+    cout<<"\n Vettore finale: ";
     for (auto &&i : Vet)
     {
         cout << i<< " ";
