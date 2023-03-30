@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <algorithm>
+#define dim 10000
 
 using namespace std;
 
@@ -11,14 +12,19 @@ using namespace std;
  * CIFRARIO :
  *  blah blah
  */
-char alfabeto[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}; // 26
-
-/**
- * ricercare a partire dalla lettera della parola da cifrare la sua posizione nell'alfabeto e sostituirla con la 3 lettera a seguire.
- */
-char chiaro[1000], cifrato[1000], decifrato[1000];
-int alt;
-
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//VARIABILI:
+//globali
+char alfabeto[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+char chiaro[dim], cifrato[dim], decifrato[dim];
+int alt; //<-- variabile d'appoggio
+//cifrario di cesare
+// non necessarie
+//cifrario a chiave privata
+char private_key[dim];
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//FUNZIONI:
+//globale
 int indice_lettera(char a)
 {
     int b = 66;
@@ -33,7 +39,7 @@ int indice_lettera(char a)
     }
     return b;
 }
-
+//cifrario di cesare
 void cifratura_cesare()
 {
     for (int i = 0; i <= strlen(chiaro); i++)
@@ -84,7 +90,7 @@ void decifratura_cesare()
         }
     }
 }
-
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 int main()
 {
     cout << "\n Benvenuti nel CIFRATORE AUTOMATICO.\n\n Regole per l'utilizzo: \n\n - Niente maiuscole \n\n - Niente lettere accentate \n\n - Caratteri massimi attuali (spazi e punteggiatura inclusa) 1000 \n\n - Buon divertimento.\n\n";
