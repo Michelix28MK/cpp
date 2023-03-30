@@ -93,7 +93,7 @@ void decifratura_cesare()
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 int main()
 {
-    cout << "\n Benvenuti nel CIFRATORE AUTOMATICO.\n\n Regole per l'utilizzo: \n\n - Niente maiuscole \n\n - Niente lettere accentate \n\n - Caratteri massimi attuali (spazi e punteggiatura inclusa) 1000 \n\n - Buon divertimento.\n\n";
+    cout << "\n Benvenuti nel CIFRATORE AUTOMATICO.\n\n Regole per l'utilizzo: \n\n - Niente maiuscole \n\n - Niente lettere accentate \n\n - Caratteri massimi attuali (spazi e punteggiatura inclusa) " << dim <<" \n\n - Buon divertimento.\n\n";
     cout << "\n Inserisci la frase da cifrare: " << endl;
     // la funzione cin() registra la prima parola fino allo spazio, gets() registra fino all'invio.
 
