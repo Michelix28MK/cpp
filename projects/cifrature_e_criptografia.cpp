@@ -23,12 +23,12 @@ using namespace std;
 //  globali
 char alfabeto[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 char chiaro[dim], cifrato[dim];
-int alt, n_alf = strlen(alfabeto); //<-- variabili d'appoggio/ottimizzazione
+int alt, j = 0, n_alf = strlen(alfabeto); //<-- variabili d'appoggio/ottimizzazione
 // cesare
 char cesare[dim];
 // boss
-int boss[dim];
 char boss_d[dim];
+int boss[dim];
 // vigenere
 char vigenere[dim], chiave[dim];
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -38,7 +38,7 @@ int indice_lettera(char a)
 {
     int b = 66; //codice errore (lettera non trovata)
 
-    for (int i = 0; i < n_alf; i++)
+    for (int i = 0; i <= n_alf; i++)
     {
         if (alfabeto[i] == a)
         {
@@ -48,20 +48,15 @@ int indice_lettera(char a)
     return b;
 }
 
-void registra_converti_chiave(char a[])
+void registra_chiave(char a[])
 {
-    cout << "\n\n Inserisci la chiave per il criptaggio : ";
+    cout << "\n\n\n Inserisci la chiave per il criptaggio : ";
     gets(a);
-
-    for (int i = 0; i <= strlen(a); i++)
-    {
-        chiave[i] = (char)indice_lettera(a[i]);
-    }
 }
 // cifratura
-void cifratura_cesare() // fix
+void cifratura_cesare() // fixed
 {
-    for (int i = 0; i <= strlen(chiaro); i++)
+    for (int i = 0; i < strlen(chiaro); i++)
     {
         alt = indice_lettera(chiaro[i]);
 
@@ -83,9 +78,9 @@ void cifratura_cesare() // fix
     }
 }
 
-void cifratura_del_boss()
+void cifratura_del_boss()// fixed
 {
-    for (int i = 0; i <= strlen(chiaro); i++)
+    for (int i = 0; i < strlen(chiaro); i++)
     {
         alt = indice_lettera(chiaro[i]);
 
@@ -123,28 +118,26 @@ void cifratura_del_boss()
     }
 }
 
-void cifrario_vigenere()
+void cifrario_vigenere()// fixed
 {
-    registra_converti_chiave(chiave);
+    registra_chiave(chiave);
 
-    int j = 0;
-
-    for (int i = 0; i <= strlen(chiaro); i++)
+    for (int i = 0; i < strlen(chiaro); i++)
     {
         alt = indice_lettera(chiaro[i]);
 
         if (alt != 66)
         { // cifratura lettera
-            if (alt + (int)chiave[j] > n_alf)
+            if (alt + indice_lettera(chiave[j]) > n_alf)
             {
-                vigenere[i] = alfabeto[alt - n_alf + (int)chiave[j]];
+                vigenere[i] = alfabeto[alt - (n_alf - indice_lettera(chiave[j]))];
             }
             else
             {
-                vigenere[i] = alfabeto[alt + (int)chiave[j]];
+                vigenere[i] = alfabeto[alt + indice_lettera(chiave[j])];
             }
             // aggiornamento posizione chiave
-            if (j < strlen(chiave))
+            if (j < (strlen(chiave)-1))
             {
                 j++;
             }
@@ -155,12 +148,12 @@ void cifrario_vigenere()
         }
         else
         {
-            vigenere[i] = cifrato[i];
+            vigenere[i] = chiaro[i];
         }
     }
 }
 // decifratura
-void decifratura_cesare()
+void decifratura_cesare()// fixed
 {
     for (int i = 0; i <= strlen(chiaro); i++)
     {
@@ -185,10 +178,10 @@ void decifratura_cesare()
     }
 }
 
-void decifratura_del_boss()
+void decifratura_del_boss()// fixed(bypass)
 {
 
-    for (int i = 0; i <= (sizeof(boss)/sizeof(int)); i++) //visto che è un array di numeri => numero di elementi = byte totali / bytes per ogni elemento
+    for (int i = 0; i < strlen(chiaro) ; i++) // (sizeof(boss)/sizeof(boss[0]))  visto che è un array di numeri => numero di elementi = byte totali / bytes per ogni elemento
     {
         alt = boss[i];
 
@@ -224,9 +217,9 @@ void decifratura_del_boss()
     }
 }
 
-void decifratura_vigenere()
+void decifratura_vigenere()// to check
 {
-    registra_converti_chiave(chiave);
+    registra_chiave(chiave);
 
     int j = 0;
 
@@ -236,16 +229,16 @@ void decifratura_vigenere()
 
         if (alt != 66)
         { // cifratura lettera
-            if (alt - (int)chiave[j] < 0)
+            if (alt + indice_lettera(chiave[j]) > n_alf)
             {
-                vigenere[i] = alfabeto[alt + n_alf - (int)chiave[j]];
+                vigenere[i] = alfabeto[alt + (n_alf - indice_lettera(chiave[j]))];
             }
             else
             {
-                vigenere[i] = alfabeto[alt - (int)chiave[j]];
+                vigenere[i] = alfabeto[alt - indice_lettera(chiave[j])];
             }
             // aggiornamento posizione chiave
-            if (j < strlen(chiave))
+            if (j < (strlen(chiave)-1))
             {
                 j++;
             }
@@ -256,7 +249,7 @@ void decifratura_vigenere()
         }
         else
         {
-            vigenere[i] = cifrato[i];
+            vigenere[i] = chiaro[i];
         }
     }
 }
@@ -266,7 +259,7 @@ void decifratura_vigenere()
 int main()
 {
     cout << "\n Benvenuti nel CIFRATORE AUTOMATICO.\n\n Regole per l'utilizzo: \n\n - Niente maiuscole \n\n - Niente lettere accentate \n\n - Caratteri massimi attuali (spazi e punteggiatura inclusa) " << dim << " \n\n - Buon divertimento.\n\n";
-    cout << "\n Inserisci la frase da cifrare: " << endl;
+    cout << "\n Inserisci la frase da cifrare: ";
     // la funzione cin() registra la prima parola fino allo spazio, gets() registra fino all'invio.
 
     gets(chiaro);
@@ -275,11 +268,11 @@ int main()
     cifratura_cesare();
     cout << "\n\n --> [cifrario di cesare] : '" << cesare << "'";
     cifratura_del_boss();
-    //decifratura_del_boss();
-    cout << "\n\n --> [cifrario del boss mafioso] : '" << boss << "'";// = '" << boss_d << "'";
+    decifratura_del_boss();
+    cout << "\n\n --> [cifrario del boss mafioso] : '" << boss << "' = '" << boss_d << "'";
 
     cifrario_vigenere();
-    cout << "\n\n --> [cifrario di vigenere] : '" << vigenere << "'";
+    cout << "\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
 
     return 0;
 }
