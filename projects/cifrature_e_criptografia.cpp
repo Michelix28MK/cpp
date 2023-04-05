@@ -5,7 +5,7 @@
 
 using namespace std;
 
-/**
+/*
  * CIFRARIO DI CESARE :
  * il cifrario di cesare sostituisce le lettere con la terza a seguire nell' alfabeto (sostituzione/scorrimento)
  *
@@ -18,11 +18,12 @@ using namespace std;
  * CIFRARIO DI VERNAM :
  * il cifrario di vernam funziona come il cifrario di vigenere con l'imposizione che la chiave deve essere lunga come la frase da nascondere
  */
+
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // VARIABILI :
 //  globali
 char alfabeto[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-char chiaro[dim], cifrato[dim];
+char chiaro[dim], select[dim];
 int alt, j = 0, n_alf = strlen(alfabeto); //<-- variabili d'appoggio/ottimizzazione
 // cesare
 char cesare[dim];
@@ -36,7 +37,7 @@ char vigenere[dim], chiave[dim];
 //  globale
 int indice_lettera(char a)
 {
-    int b = 66; //codice errore (lettera non trovata)
+    int b = 66; // codice errore (lettera non trovata)
 
     for (int i = 0; i <= n_alf; i++)
     {
@@ -78,7 +79,7 @@ void cifratura_cesare() // fixed
     }
 }
 
-void cifratura_del_boss()// fixed
+void cifratura_del_boss() // fixed
 {
     for (int i = 0; i < strlen(chiaro); i++)
     {
@@ -112,13 +113,13 @@ void cifratura_del_boss()// fixed
                 alt = 70;
                 break;
             }
-            
+
             boss[i] = alt;
         }
     }
 }
 
-void cifrario_vigenere()// fixed
+void cifratura_vigenere() // fixed
 {
     registra_chiave(chiave);
 
@@ -137,7 +138,7 @@ void cifrario_vigenere()// fixed
                 vigenere[i] = alfabeto[alt + indice_lettera(chiave[j])];
             }
             // aggiornamento posizione chiave
-            if (j < (strlen(chiave)-1))
+            if (j < (strlen(chiave) - 1))
             {
                 j++;
             }
@@ -153,7 +154,7 @@ void cifrario_vigenere()// fixed
     }
 }
 // decifratura
-void decifratura_cesare()// fixed
+void decifratura_cesare() // fixed
 {
     for (int i = 0; i <= strlen(chiaro); i++)
     {
@@ -173,15 +174,15 @@ void decifratura_cesare()// fixed
         }
         else
         {
-            cesare[i] = cifrato[i];
+            cesare[i] = chiaro[i];
         }
     }
 }
 
-void decifratura_del_boss()// fixed(bypass)
+void decifratura_del_boss() // fixed(bypass)
 {
 
-    for (int i = 0; i < strlen(chiaro) ; i++) // (sizeof(boss)/sizeof(boss[0]))  visto che è un array di numeri => numero di elementi = byte totali / bytes per ogni elemento
+    for (int i = 0; i < strlen(chiaro); i++) // (sizeof(boss)/sizeof(boss[0]))  visto che è un array di numeri => numero di elementi = byte totali / bytes per ogni elemento
     {
         alt = boss[i];
 
@@ -217,7 +218,7 @@ void decifratura_del_boss()// fixed(bypass)
     }
 }
 
-void decifratura_vigenere()// to check
+void decifratura_vigenere() // to check
 {
     registra_chiave(chiave);
 
@@ -238,7 +239,7 @@ void decifratura_vigenere()// to check
                 vigenere[i] = alfabeto[alt - indice_lettera(chiave[j])];
             }
             // aggiornamento posizione chiave
-            if (j < (strlen(chiave)-1))
+            if (j < (strlen(chiave) - 1))
             {
                 j++;
             }
@@ -259,20 +260,41 @@ void decifratura_vigenere()// to check
 int main()
 {
     cout << "\n Benvenuti nel CIFRATORE AUTOMATICO.\n\n Regole per l'utilizzo: \n\n - Niente maiuscole \n\n - Niente lettere accentate \n\n - Caratteri massimi attuali (spazi e punteggiatura inclusa) " << dim << " \n\n - Buon divertimento.\n\n";
-    cout << "\n Inserisci la frase da cifrare: ";
-    // la funzione cin() registra la prima parola fino allo spazio, gets() registra fino all'invio.
+    cout << "\n Specifica se vuoi 'cifrare' o 'decifrare' il messaggio ('c'/'d'): ";
+    gets(select);
 
+    cout << "\n Inserisci il testo da elaborare : ";
+    // la funzione cin() registra la prima parola fino allo spazio, gets() registra fino all'invio.
     gets(chiaro);
 
-    cout << "\n La tua frase è in chiaro è : '" << chiaro << "'";
-    cifratura_cesare();
-    cout << "\n\n --> [cifrario di cesare] : '" << cesare << "'";
-    cifratura_del_boss();
-    decifratura_del_boss();
-    cout << "\n\n --> [cifrario del boss mafioso] : '" << boss << "' = '" << boss_d << "'";
-
-    cifrario_vigenere();
-    cout << "\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
-
+    if (select == "c")
+    {
+        cout << "\n Il testo in chiaro è : '" << chiaro << "'";
+        cifratura_cesare();
+        cout << "\n\n --> [cifrario di cesare] : '" << cesare << "'";
+        cifratura_del_boss();
+        cout << "\n\n --> [cifrario del boss mafioso] : '";
+        for (int number : boss)
+        {
+            cout << number;
+        }
+        cout << "'";
+        cifratura_vigenere();
+        cout << "\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
+    }
+    else if (select == "d")
+    {
+        cout << "\n Il testo cifrato è : '" << chiaro << "'";
+        decifratura_cesare();
+        cout << "\n\n --> [cifrario di cesare] : '" << cesare << "'";
+        decifratura_del_boss();
+        cout << "\n\n --> [cifrario del boss mafioso] : '" << boss_d << "'";
+        decifratura_vigenere();
+        cout << "\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
+    }
+    else
+    {
+        cout << "\n\n\n Error: input command error 01";
+    }
     return 0;
 }
