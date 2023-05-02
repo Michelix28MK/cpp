@@ -14,8 +14,7 @@ void rileva_parametri()
     cin >> parametro[2];
 
     cout << endl
-         << endl
-         << parametro[0] << "f(x) = x^2 + (" << parametro[1] << ")x + (" << parametro[2] << ")";
+         << "f(x) = " << parametro[0] << " x^2 + (" << parametro[1] << ")x + (" << parametro[2] << ")";
 }
 void calcolo_delta()
 {
@@ -37,21 +36,42 @@ void disponi_risultato()
 {
     if (delta == 0)
     {
-        cout << "X > " << incognita[0];
+        cout << "X >= " << incognita[0];
     }
     else if (delta < 0)
     {
-        cout <<"X "<< (parametro[0] > 0) ? "OGNI X" : "NESSUN X";
-    }
-    else
-    {
-        if (incognita[0] < incognita[1])
+        if (parametro[0] > 0)
         {
-            cout << incognita[0] << " <= X <= " << incognita[1];
+            cout << "OGNI X";
         }
         else
         {
-            cout << incognita[1] << " <= X <= " << incognita[0];
+            cout << "NESSUN X";
+        }
+    }
+    else
+    {
+        if (incognita[0] > 0)
+        {
+            if (incognita[0] < incognita[1])
+            {
+                cout << " X <= " << incognita[0] << " e  X >= " << incognita[1];
+            }
+            else
+            {
+                cout << " X <= " << incognita[1] << " e  X >= " << incognita[0];
+            }
+        }
+        else
+        {
+            if (incognita[0] < incognita[1])
+            {
+                cout << incognita[0] << " <= X <= " << incognita[1];
+            }
+            else
+            {
+                cout << incognita[1] << " <= X <= " << incognita[0];
+            }
         }
     }
 }
@@ -73,7 +93,7 @@ int main()
     }
     else
     {
-        cout << "\n\nEssendo che delta > 0 allora esistono due soluzioni per l'equazione associata: \n\n X1,x2 = -b + delta^(1/2) / 2a, -b - delta^(1/2) /2a => \n\n"
+        cout << "\n\nEssendo che delta > 0 allora esistono due soluzioni per l'equazione associata: \n\n X1,X2 = -b + delta^(1/2) / 2a, -b - delta^(1/2) /2a => \n\n"
              << (-parametro[1]) << " + " << sqrt(delta) << " / " << (2 * parametro[0]) << " = " << incognita[0] << "\n\n"
              << (-parametro[1]) << " - " << sqrt(delta) << " / " << (2 * parametro[0]) << " = " << incognita[1];
     }
