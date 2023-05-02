@@ -31,7 +31,7 @@ char cesare[dim];
 char boss_d[dim];
 int boss[dim];
 // vigenere
-char vigenere[dim], chiave[dim];
+char vigenere[dim], chiave[dim] = {'a'};
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // FUNZIONI :
 //  globale
@@ -121,8 +121,6 @@ void cifratura_del_boss() // fixed
 
 void cifratura_vigenere() // fixed
 {
-    registra_chiave(chiave);
-
     for (int i = 0; i < strlen(chiaro); i++)
     {
         alt = indice_lettera(chiaro[i]);
@@ -220,8 +218,6 @@ void decifratura_del_boss() // fixed(bypass)
 
 void decifratura_vigenere() // to check
 {
-    registra_chiave(chiave);
-
     int j = 0;
 
     for (int i = 0; i <= strlen(chiaro); i++)
@@ -263,10 +259,10 @@ int main()
     cout << "\n Inserisci il testo da elaborare : ";
     // la funzione cin() registra la prima parola fino allo spazio, gets() registra fino all'invio.
     gets(chiaro);
-    cout << "\n Specifica se vuoi 'cifrare' o 'decifrare' il messaggio ('c'/'d'): ";
+    cout << "\n Specifica se vuoi una 'cifatura semplice', 'decifratura semplice', 'cifratura con chiave' o 'decifratura con chiave' il messaggio ('a'/'b'/'c'/'d'): ";
     cin >> select;
 
-    if (select == 'c')
+    if (select == 'a')
     {
         cout << "\n Il testo in chiaro è : '" << chiaro << "'";
         cifratura_cesare();
@@ -275,21 +271,31 @@ int main()
         cout << "\n\n --> [cifrario del boss mafioso] : '";
         for (int i = 0; i < strlen(chiaro); i++)
         {
-            cout <<" "<< boss[i];
+            cout << boss[i] << ";";
         }
         cout << "'";
-        cifratura_vigenere();
-        cout << "\n\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
     }
-    else if (select == 'd')
+    else if (select == 'c')
+    {
+        registra_chiave(chiave);
+        cout << "\n Il testo in chiaro è : '" << chiaro << "'";
+        cifratura_vigenere();
+        cout << "\n\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'" << endl;
+    }
+    else if (select == 'b')
     {
         cout << "\n Il testo cifrato è : '" << chiaro << "'";
         decifratura_cesare();
         cout << "\n\n --> [cifrario di cesare] : '" << cesare << "'";
         decifratura_del_boss();
         cout << "\n\n --> [cifrario del boss mafioso] : '" << boss_d << "'";
+    }
+    else if (select == 'd')
+    {
+        registra_chiave(chiave);
+        cout << "\n Il testo cifrato è : '" << chiaro << "'";
         decifratura_vigenere();
-        cout << "\n\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'";
+        cout << "\n\n --> [cifrario di vigenere] ([verman] se lunghezza chiave = lunghezza testo) : '" << vigenere << "'" << endl;
     }
     else
     {
